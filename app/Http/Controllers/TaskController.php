@@ -9,11 +9,15 @@ use App\Task;
 class TaskController extends Controller
 {
     public function index(int $id){
+
+        //すべてのフォルダを取得する
         $folders = Folder::all();
 
+        //選ばれたフォルダを取得する
         $current_folders = Folder::find($id);
 
-        $tasks = Task::where('folder_id', $current_folders->id)->get();
+        //選ばれたフォルダに紐づくタスクを取得する
+        $tasks = $current_folders->tasks()->get();
 
         return view('tasks/index',[
             'folders' => $folders,
